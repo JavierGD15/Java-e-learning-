@@ -1,0 +1,32 @@
+CREATE DATABASE ejemplo1;
+
+CREATE TABLE tabla_ejemplo1(
+
+	
+	id_usuario int PRIMARY KEY AUTO_INCREMENT
+)
+
+
+
+INSERT INTO consola(nombre, marca) VALUES(‘PS4′,’Sony’);
+
+UPDATE table_name
+SET column1=value1,column2=value2,…
+WHERE some_column=some_value;
+
+UPDATE ayuda SET id_usuario = "ayuda1" WHERE id_usuario = "ayuda";
+
+DELETE FROM juego WHERE id_juego=5
+
+SELECT * FROM `electrodomesticos`
+
+DROP TABLE `herramientas`
+
+DROP DATABASE IF EXISTS productos;
+
+INSERT INTO consola(nombre, marca) VALUES(‘PS4′,’Sony’),(‘PS5′,’Sony’);
+
+ALTER TABLE `grados`
+  ADD PRIMARY KEY (`grado_id`);
+
+SELECT * FROM `alumnos` WHERE carnet=201800555;
