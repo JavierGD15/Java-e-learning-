@@ -41,8 +41,7 @@ public class administrador extends JFrame {
         //agregar funcionalidad
         ActionListener accion_crear = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                
+            public void actionPerformed(ActionEvent e) {                
                 form_usuario s = new form_usuario();
                 s.agregar_usuario();
                 sp.setVisible(false);
@@ -61,6 +60,24 @@ public class administrador extends JFrame {
         JButton modificar = new JButton("Modificar Usuario");
         modificar.setBounds(300, 550, 200, 30);
         p1.add(modificar);
+        
+         ActionListener accion_modificar = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {                
+                
+                modificar m = new modificar();
+                int fila = tabla.getSelectedRow();
+                try {
+                    m.agregar_usuario(fila);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(administrador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        };
+        //Acción del evento
+        modificar.addActionListener(accion_modificar);
+        
         JButton eliminar = new JButton("Eliminar");
         eliminar.setBounds(520, 550, 200, 30);
         p1.add(eliminar);

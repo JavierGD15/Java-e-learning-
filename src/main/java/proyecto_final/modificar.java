@@ -1,3 +1,4 @@
+
 package proyecto_final;
 
 import java.awt.Color;
@@ -10,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
@@ -21,17 +21,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
-public class form_usuario extends JFrame {
-
+public class modificar extends JFrame{
     Object usuarios[][] = new Object[50][9];
     JPanel panel2 = new JPanel();
     JButton b1;
     JButton b2;
 
-    public void agregar_usuario() {
-
+    public void agregar_usuario(int id) throws ClassNotFoundException {
+        load();
         setSize(900, 650);
         setLocationRelativeTo(null);
         setMaximumSize(new Dimension(1000, 1000));
@@ -40,7 +38,7 @@ public class form_usuario extends JFrame {
         panel2.setLayout(null);
         add(panel2);
 
-        JLabel titulo = new JLabel("Agregar Usuario");
+        JLabel titulo = new JLabel("Modificar Usuario");
         titulo.setFont(new Font("Serig", Font.PLAIN, 25));
         titulo.setBounds(350, 20, 400, 50);
 
@@ -48,43 +46,49 @@ public class form_usuario extends JFrame {
         label.setBounds(30, 85, 500, 50);
         label.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text = new JTextField(15);
+        text.setText(usuarios[id][1]+"");
         text.setBounds(150, 100, 250, 20);
 
         JLabel label1 = new JLabel("Apellido: ");
         label1.setBounds(450, 85, 500, 50);
         label1.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text1 = new JTextField(15);
+        text1.setText(usuarios[id][2].toString());
         text1.setBounds(560, 100, 250, 20);
 
         JLabel label2 = new JLabel("Teléfono: ");
         label2.setBounds(30, 200, 500, 50);
         label2.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text2 = new JTextField(15);
+        text2.setText(usuarios[id][3].toString());
         text2.setBounds(150, 215, 250, 20);
 
         JLabel label3 = new JLabel("Dirección: ");
         label3.setBounds(450, 200, 500, 50);
         label3.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text3 = new JTextField(15);
+        text3.setText(usuarios[id][4].toString());
         text3.setBounds(560, 215, 250, 20);
 
         JLabel label4 = new JLabel("Correo: ");
         label4.setBounds(30, 315, 500, 50);
         label4.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text4 = new JTextField(15);
+        text4.setText(usuarios[id][5].toString());
         text4.setBounds(150, 330, 250, 20);
 
         JLabel label5 = new JLabel("Fecha de Nacimiento: ");
         label5.setBounds(450, 315, 500, 50);
         label5.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text5 = new JTextField(15);
-        text5.setText("[dd/mm/yy]");
+        text5.setText(usuarios[id][6].toString());
         text5.setBounds(650, 330, 200, 20);
 
         JLabel label6 = new JLabel("Contraseña: ");
         label6.setBounds(30, 430, 500, 50);
         label6.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text6 = new JTextField(15);
+        text6.setText(usuarios[id][7].toString());
         text6.setBounds(150, 445, 250, 20);
 
         ButtonGroup bg = new ButtonGroup();
@@ -167,54 +171,24 @@ public class form_usuario extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 if (!("".equals(text.getText())) && !("".equals(text1.getText())) && !("".equals(text2.getText())) && !("".equals(text3.getText())) && !("".equals(text4.getText())) && !("".equals(text5.getText())) && !("".equals(text6.getText()))) {
-                    try {
-                        load();
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(form_usuario.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    if (usuarios[0][0] == null) {
-                        usuarios[0][0] = 1;
-                        usuarios[0][1] = text.getText();
-                        usuarios[0][2] = text1.getText();
-                        usuarios[0][3] = text2.getText();
-                        usuarios[0][4] = text3.getText();
-                        usuarios[0][5] = text4.getText();
-                        usuarios[0][6] = text5.getText();
-                        usuarios[0][7] = text6.getText();
-
-                        if (c1.equals(true)) {
-                            usuarios[0][8] = 1;
-
-                        } else {
-                            usuarios[0][8] = 0;
-                        }
-
-                    } else {
-                        int x = Integer.parseInt(usuarios[0][0] + "");
-                        for (int i = 1; i < usuarios.length; i++) {
-                            if (usuarios[i][0] == null) {                                
-                                usuarios[i][0] = x+1;
-                                usuarios[i][1] = text.getText();
-                                usuarios[i][2] = text1.getText();
-                                usuarios[i][3] = text2.getText();
-                                usuarios[i][4] = text3.getText();
-                                usuarios[i][5] = text4.getText();
-                                usuarios[i][6] = text5.getText();
-                                usuarios[i][7] = text6.getText();
+                    
+                                usuarios[id][1] = text.getText();
+                                usuarios[id][2] = text1.getText();
+                                usuarios[id][3] = text2.getText();
+                                usuarios[id][4] = text3.getText();
+                                usuarios[id][5] = text4.getText();
+                                usuarios[id][6] = text5.getText();
+                                usuarios[id][7] = text6.getText();
 
                                 if (c1.equals(true)) {
-                                    usuarios[i][8] = 1;
+                                    usuarios[id][8] = 1;
                                 } else {
-                                    usuarios[i][8] = 0;
-                                }                                
-                                break;
-                            } else {
-                                x++;
-                            }
-                        }
-                    }                    
-                    save();
-                    setVisible(false);
+                                    usuarios[id][8] = 0;
+                                }  
+                                
+                                save();
+                                setVisible(false);
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
                 }
@@ -251,5 +225,4 @@ public class form_usuario extends JFrame {
         }
 
     }
-
 }
