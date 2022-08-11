@@ -211,6 +211,8 @@ public class form_usuario extends JFrame {
                                     usuarios[i][8] = 0;
 
                                 }
+                                
+                                break;
                             } else {
                                 x++;
                             }
@@ -219,7 +221,7 @@ public class form_usuario extends JFrame {
                     }
                     
                     save();
-
+                    setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
                 }

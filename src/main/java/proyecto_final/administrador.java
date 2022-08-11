@@ -4,6 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,6 +45,12 @@ public class administrador extends JFrame {
                 
                 form_usuario s = new form_usuario();
                 s.agregar_usuario();
+                sp.setVisible(false);
+                try {
+                    tabla();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(administrador.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
         };
@@ -59,10 +70,10 @@ public class administrador extends JFrame {
 
     }
 
-    public void tabla() {
+    public void tabla() throws ClassNotFoundException {
 
+        load();
         String[] columnas = {"No.", "Nombre", "Apellido", "Rol", "Correo", "Teléfono"};
-
         tabla = new JTable(usuarios, columnas);
         sp = new JScrollPane(tabla);
         sp.setSize(820, 450);
@@ -71,14 +82,28 @@ public class administrador extends JFrame {
         p1.add(sp);
 
     }
+    
+    public void load() throws ClassNotFoundException {
 
-    public void ejecutar() {
+        try {
+
+            ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("usuarios.dat"));
+
+            usuarios = (Object[][]) recuperar.readObject();
+            recuperar.close();
+
+        } catch (IOException e) {
+        }
+
+    }
+
+    public void ejecutar() throws ClassNotFoundException {
 
         crear();
         tabla();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         administrador a = new administrador();
         a.ejecutar();
     }
