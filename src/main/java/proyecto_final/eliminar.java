@@ -1,4 +1,3 @@
-
 package proyecto_final;
 
 import java.awt.Color;
@@ -11,8 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,13 +19,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class modificar extends JFrame{
+public class eliminar extends JFrame {
+
     Object usuarios[][] = new Object[50][9];
     JPanel panel2 = new JPanel();
     JButton b1;
     JButton b2;
 
-    public void agregar_usuario(int id) throws ClassNotFoundException {
+    public void eliminar_usuario(int id) throws ClassNotFoundException {
         load();
         setSize(900, 650);
         setLocationRelativeTo(null);
@@ -38,7 +36,7 @@ public class modificar extends JFrame{
         panel2.setLayout(null);
         add(panel2);
 
-        JLabel titulo = new JLabel("Modificar Usuario");
+        JLabel titulo = new JLabel("Eliminar Usuario");
         titulo.setFont(new Font("Serig", Font.PLAIN, 25));
         titulo.setBounds(350, 20, 400, 50);
 
@@ -46,7 +44,8 @@ public class modificar extends JFrame{
         label.setBounds(30, 85, 500, 50);
         label.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text = new JTextField(15);
-        text.setText(usuarios[id][1]+"");
+        text.setText(usuarios[id][1] + "");
+        text.setEnabled(false);
         text.setBounds(150, 100, 250, 20);
 
         JLabel label1 = new JLabel("Apellido: ");
@@ -54,6 +53,7 @@ public class modificar extends JFrame{
         label1.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text1 = new JTextField(15);
         text1.setText(usuarios[id][2].toString());
+        text1.setEnabled(false);
         text1.setBounds(560, 100, 250, 20);
 
         JLabel label2 = new JLabel("Teléfono: ");
@@ -61,6 +61,7 @@ public class modificar extends JFrame{
         label2.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text2 = new JTextField(15);
         text2.setText(usuarios[id][3].toString());
+        text2.setEnabled(false);
         text2.setBounds(150, 215, 250, 20);
 
         JLabel label3 = new JLabel("Dirección: ");
@@ -68,6 +69,7 @@ public class modificar extends JFrame{
         label3.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text3 = new JTextField(15);
         text3.setText(usuarios[id][4].toString());
+        text3.setEnabled(false);
         text3.setBounds(560, 215, 250, 20);
 
         JLabel label4 = new JLabel("Correo: ");
@@ -75,6 +77,7 @@ public class modificar extends JFrame{
         label4.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text4 = new JTextField(15);
         text4.setText(usuarios[id][5].toString());
+        text4.setEnabled(false);
         text4.setBounds(150, 330, 250, 20);
 
         JLabel label5 = new JLabel("Fecha de Nacimiento: ");
@@ -82,6 +85,7 @@ public class modificar extends JFrame{
         label5.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text5 = new JTextField(15);
         text5.setText(usuarios[id][6].toString());
+        text5.setEnabled(false);
         text5.setBounds(650, 330, 200, 20);
 
         JLabel label6 = new JLabel("Contraseña: ");
@@ -89,31 +93,8 @@ public class modificar extends JFrame{
         label6.setFont(new Font("Serig", Font.PLAIN, 20));
         JTextField text6 = new JTextField(15);
         text6.setText(usuarios[id][7].toString());
+        text6.setEnabled(false);
         text6.setBounds(150, 445, 250, 20);
-
-        ButtonGroup bg = new ButtonGroup();
-
-        JRadioButton c1 = new JRadioButton("Activo", true);
-        c1.setBackground(Color.CYAN);
-        c1.setFont(new Font("Serig", Font.PLAIN, 20));
-        c1.setBounds(480, 430, 150, 50);
-        bg.add(c1);
-        JRadioButton c2 = new JRadioButton("Inactivo", false);
-        c2.setBackground(Color.CYAN);
-        c2.setFont(new Font("Serig", Font.PLAIN, 20));
-        c2.setBounds(700, 430, 250, 50);
-        bg.add(c2);
-
-        if (c1.equals(true)) {
-            //usuarios.setActivo(1);
-
-        } else {
-            //usuarios.setActivo(0);
-
-        }
-
-        panel2.add(c1);
-        panel2.add(c2);
 
         panel2.add(titulo);
 
@@ -141,7 +122,7 @@ public class modificar extends JFrame{
         b1 = new JButton();
         b2 = new JButton();
 
-        b1.setText("Guardar");
+        b1.setText("Eliminar");
         b1.setBounds(150, 500, 200, 40);
         panel2.add(b1);
 
@@ -159,6 +140,9 @@ public class modificar extends JFrame{
                 text4.setText("");
                 text5.setText("");
                 text6.setText("");
+                setVisible(false);
+                //eliminar el frame de memoria
+                dispose();
 
             }
         };
@@ -170,29 +154,35 @@ public class modificar extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (!("".equals(text.getText())) && !("".equals(text1.getText())) && !("".equals(text2.getText())) && !("".equals(text3.getText())) && !("".equals(text4.getText())) && !("".equals(text5.getText())) && !("".equals(text6.getText()))) {
-                    
-                                usuarios[id][1] = text.getText();
-                                usuarios[id][2] = text1.getText();
-                                usuarios[id][3] = text2.getText();
-                                usuarios[id][4] = text3.getText();
-                                usuarios[id][5] = text4.getText();
-                                usuarios[id][6] = text5.getText();
-                                usuarios[id][7] = text6.getText();
+                for (int i = id; i < usuarios.length; i++) {
 
-                                if (c1.equals(true)) {
-                                    usuarios[id][8] = 1;
-                                } else {
-                                    usuarios[id][8] = 0;
-                                }  
-                                
-                                save();
-                                setVisible(false);
-                    
-                } else {
-                    JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+                    if (i == usuarios.length - 1) {
+                        usuarios[i][0] = null;
+                        usuarios[i][1] = null;
+                        usuarios[i][2] = null;
+                        usuarios[i][3] = null;
+                        usuarios[i][4] = null;
+                        usuarios[i][5] = null;
+                        usuarios[i][6] = null;
+                        usuarios[i][7] = null;
+                        usuarios[i][8] = null;
+                    }else if (usuarios[i][0] == null) {
+                        break;
+                    } 
+                    else {
+                        usuarios[i][0] = i + 1;
+                        usuarios[i][1] = usuarios[i + 1][1];
+                        usuarios[i][2] = usuarios[i + 1][2];
+                        usuarios[i][3] = usuarios[i + 1][3];
+                        usuarios[i][4] = usuarios[i + 1][4];
+                        usuarios[i][5] = usuarios[i + 1][5];
+                        usuarios[i][6] = usuarios[i + 1][6];
+                        usuarios[i][7] = usuarios[i + 1][7];
+                        usuarios[i][8] = usuarios[i + 1][8];
+                    }
                 }
-
+                save();
+                dispose();
             }
         };
 
@@ -225,6 +215,4 @@ public class modificar extends JFrame{
         }
 
     }
-    
-    
 }

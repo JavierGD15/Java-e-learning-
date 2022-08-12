@@ -21,7 +21,7 @@ public class login extends JFrame {
     JPanel p1 = new JPanel();
     JTextField t1 = new JTextField();
     JPasswordField t2 = new JPasswordField();
-    Object usuarios[][] = new Object[50][10];
+    Object usuarios[][] = new Object[50][9];
     int oportunidades = 3;
 
     //metodos
@@ -89,25 +89,29 @@ public class login extends JFrame {
         load();
         administrador ad = new administrador();
         if (t1.getText().equals("Admin") && t2.getText().equals("Admin")) {
-            ad.ejecutar();
+            ad.ejecutar("Administrador");
             setVisible(false);
 
         } else {
+            boolean var = false;
             for (int i = 0; i < usuarios.length; i++) {
-                if (usuarios[i][1] == t1.getText() && usuarios[i][9] == t2.getText()) {
-                    ad.ejecutar();
-                    setVisible(false);
+                if (usuarios[i][1] .equals(t1.getText()) && usuarios[i][7] .equals(t2.getText())) {
+                    ad.ejecutar(usuarios[i][1].toString());
+                    dispose();
+                    var = true;
                     break;
 
                 }
 
             }
-            oportunidades--;
+            if (var == false) {
+                oportunidades--;
             if (oportunidades == 0) {
                 JOptionPane.showMessageDialog(null, "Se acabaron las oportunidades");
                 System.exit(0);
             } else {
                 JOptionPane.showMessageDialog(null, "Datos incorrectos, te quedan " + oportunidades + " oportunidades");
+            }
             }
 
         }

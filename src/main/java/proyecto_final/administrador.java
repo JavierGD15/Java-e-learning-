@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,7 +26,7 @@ public class administrador extends JFrame {
     JPanel p1 = new JPanel();
     Object usuarios[][] = new Object[50][10];
 
-    private void crear() {
+    private void crear(String usuario) {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(900, 650);
         setLocationRelativeTo(null);
@@ -34,6 +35,11 @@ public class administrador extends JFrame {
         p1.setBackground(Color.CYAN);
         p1.setLayout(null);
         add(p1);
+        
+        //etiqueta usuario
+        usuario_inicio.setText("Bienvenido "+usuario);
+        usuario_inicio.setBounds(700, 10, 300, 40);
+        p1.add(usuario_inicio);
 
         JButton crear = new JButton("Agregar Usuario");
         crear.setBounds(70, 550, 200, 30);
@@ -41,7 +47,7 @@ public class administrador extends JFrame {
         //agregar funcionalidad
         ActionListener accion_crear = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {                
+            public void actionPerformed(ActionEvent e) {
                 form_usuario s = new form_usuario();
                 s.agregar_usuario();
                 sp.setVisible(false);
@@ -50,7 +56,6 @@ public class administrador extends JFrame {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(administrador.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         };
 
@@ -60,29 +65,60 @@ public class administrador extends JFrame {
         JButton modificar = new JButton("Modificar Usuario");
         modificar.setBounds(300, 550, 200, 30);
         p1.add(modificar);
-        
-         ActionListener accion_modificar = new ActionListener() {
+
+        ActionListener accion_modificar = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {                
-                
-                modificar m = new modificar();
+            public void actionPerformed(ActionEvent e) {
+
                 int fila = tabla.getSelectedRow();
+                
+                if (fila >=0) {
+                     modificar m = new modificar();
+                
                 try {
                     m.agregar_usuario(fila);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(administrador.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+                }else{                
+                     JOptionPane.showMessageDialog(null, "Debe seleccionar una fila");
+                }
+               
             }
         };
         //Acción del evento
         modificar.addActionListener(accion_modificar);
-        
+
         JButton eliminar = new JButton("Eliminar");
         eliminar.setBounds(520, 550, 200, 30);
+        
         p1.add(eliminar);
+
+       
+
         JButton salir = new JButton("Salir");
         salir.setBounds(0, 0, 100, 30);
+        salir.setBackground(Color.red);
+        
+        
+         ActionListener accion_salir = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                login l = new login();
+                try {
+                    l.ejecutar();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(administrador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dispose();
+            }
+        };
+
+        //Acción del evento
+        salir.addActionListener(accion_salir);
+        
+        
         p1.add(salir);
 
     }
@@ -99,30 +135,24 @@ public class administrador extends JFrame {
         p1.add(sp);
 
     }
-    
-    public void load() throws ClassNotFoundException {
 
+    public void load() throws ClassNotFoundException {
         try {
 
             ObjectInputStream recuperar = new ObjectInputStream(new FileInputStream("usuarios.dat"));
-
             usuarios = (Object[][]) recuperar.readObject();
             recuperar.close();
-
         } catch (IOException e) {
         }
 
     }
 
-    public void ejecutar() throws ClassNotFoundException {
+    public void ejecutar(String usuario) throws ClassNotFoundException {
 
-        crear();
+        crear(usuario);
         tabla();
     }
 
-    public static void main(String[] args) throws ClassNotFoundException {
-        administrador a = new administrador();
-        a.ejecutar();
-    }
+   
 
 }
